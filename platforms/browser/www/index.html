@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Kirim Slur</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#filter").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#data .container-data").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="navbar-header">Kirim Slur</div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="menu">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="#">Pelanggan</a>
+                <a class="nav-item nav-link" href="#">Barang</a>
+                <a class="nav-item nav-link" href="#">Kurir</a>
+                <a class="nav-item nav-link" href="#">Pemesanan</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container content">
+        <div class="content-header">Data Pelanggan</div>
+        <label class="input-group">
+            <input id="filter" type="text" class="form-control" placeholder="Cari data pelanggan...">
+            <div class="input-group-prepend order-first">
+                <div class="input-group-text">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+        </label>
+        <div id="data"></div>
+    </div>
+    <div type="button" class="coba" onclick="">
+        <div class="circle-plus">
+            <i class="fas fa-plus"></i>
+        </div>
+    </div>
+</body>
+
+</html>

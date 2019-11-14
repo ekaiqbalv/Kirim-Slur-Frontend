@@ -1,0 +1,73 @@
+nav{
+    background-color: #e9e9e9;
+}
+nav .navbar-header{
+    font-size: 22px;
+    font-weight: 600;
+}
+.content{
+    margin: 20px 0;
+}
+.content-header{
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+.input-group .input-group-text{
+    background-color: white !important;
+    border-right-width: 0;
+    border-radius: 4px 0 0 4px !important;
+}
+.input-group #filter:focus + .input-group-prepend .input-group-text {
+    border-color: #80bdff;
+}
+.input-group #filter{
+    border-left-width: 0;    
+    border-radius: 0 4px 4px 0 !important;
+    padding-left: 0;
+    box-shadow: none;    
+}
+#data{
+    margin-top: 16px;    
+}
+.data-header{
+    font-size: 20px;
+    font-weight: 600;
+}
+.icon-loading{
+    text-align: center;    
+}
+.icon-loading i{
+    font-size: 36px;
+    margin-bottom: 8px;
+}
+.container-data{
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 11px 16px;
+    text-align: left;
+}
+.container-action{
+    display: flex;
+    flex-direction: row-reverse;
+}
+.container-action button{
+    margin: 4px;
+}
+.coba{
+    position: fixed;
+    right: 12px;
+    bottom: 12px;
+}
+.circle-plus{
+    padding: 12px;
+    background-color: grey;    
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.circle-plus i{
+    font-size: 24px;
+    color: white;
+}
