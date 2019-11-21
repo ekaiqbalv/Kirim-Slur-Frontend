@@ -108,7 +108,7 @@ var Application = {
       data: JSON.stringify(data),
       success: function (dataObject, textStatus, xhr) {
         if(xhr.status == 201){
-          window.location.replace("kurir.html")
+          window.location.replace("index.html")
         }
       },
       error: function () {
@@ -123,7 +123,7 @@ var Application = {
       type: "delete",
       success: function (dataObject, textStatus, xhr) {
         if(xhr.status == 204){          
-          window.location.replace("kurir.html")
+          window.location.replace("index.html")
         }
       },
       error: function () {
@@ -141,7 +141,7 @@ var Application = {
       data: JSON.stringify(data),
       success: function (dataObject, textStatus, xhr) {
         if(xhr.status == 200){
-          window.location.replace("kurir.html")
+          window.location.replace("index.html")
         }
       },
       error: function () {
