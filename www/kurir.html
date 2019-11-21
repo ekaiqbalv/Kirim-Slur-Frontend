@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Daftar Kurir | Kirim Slur</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery-2.1.1.js" type="text/javascript"></script>
+    <script src="js/jquery.mobile-1.4.5.js" type="text/javascript"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="navbar-header">Kirim Slur</div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="menu">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="#">Pelanggan</a>
+                <a class="nav-item nav-link" href="#">Barang</a>
+                <a class="nav-item nav-link" href="#">Kurir</a>
+                <a class="nav-item nav-link" href="#">Pemesanan</a>
+            </div>
+        </div>
+    </nav>
+    <div data-role="page" id="list-data">
+        <div data-role="header">
+            <h1>Daftar Kurir</h1>
+        </div>
+        <div role="main" class="ui-content">
+            <div class="section-text">Daftar Kurir</div>
+            <ul id="list-kurir" data-role="listview" data-inset="true" data-filter="true"></ul>
+            <a href="#tambah-data" target="_self" class="floating-add">
+                <i class="fas fa-plus"></i>
+            </a>
+        </div>
+    </div>
+    <div data-role="page" id="detail-data">
+        <div data-role="header">
+            <h1>Detail kurir</h1>
+        </div>
+        <div role="main" class="ui-content" id="main2">
+            <div class="section-text">Detail kurir</div>
+            <input type="hidden" value="" id="i-id" />
+            <label class="label-text">Nama</label>
+            <p id="p-nama"></p>
+            <label class="label-text">Nomor KTP</label>
+            <p id="p-no-ktp"></p>
+            <label class="label-text">Nomor Telepon</label>
+            <p id="p-no-telp"></p>
+        </div>
+        <div class="container-action">
+            <div data-role="popup" id="popupDialog" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
+                <div data-role="header" data-theme="a">
+                    <h1>Hapus Kurir?</h1>
+                </div>
+                <div role="main" class="ui-content">
+                    <h5 class="ui-title">Apakah anda yakin ingin menghapus kurir ini?</h5>
+                    <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Batal</a>
+                    <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow" id="btn-delete">Hapus</a>
+                </div>
+            </div>
+            <a href="#popupDialog" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b">Hapus</a>
+            <a href="#edit-data"><button class="btn btn-sm btn-outline-secondary" id="btn-update">Edit</button></a>
+        </div>
+    </div>
+
+    <div data-role="page" id="tambah-data">
+        <div data-role="header">
+            <h1>Tambah kurir</h1>
+        </div>
+        <div role="main" class="ui-content" id="main2">
+            <div class="section-text">Tambah kurir</div>
+            <form id="addDataForm">
+                <div class="form-group">
+                    <label>Nama</label>
+                    <input type="text" class="form-control" id="input-nama" name="nama" required>
+                </div>
+                <div class="form-group">
+                    <label>No KTP</label>
+                    <input type="number" class="form-control" id="input-no-ktp" name="no_ktp" required>
+                </div>
+                <div class="form-group">
+                    <label>Nomor Telpon</label>
+                    <input type="number" class="form-control" id="input-no-telp" name="no_telp" required>
+                </div>
+            </form>
+            <button type="button" class="btn btn-outline-success" id="tambah-data-kurir">Tambah</button>
+        </div>
+    </div>
+
+    <div data-role="page" id="edit-data">
+        <div data-role="header">
+            <h1>Edit kurir</h1>
+        </div>
+        <div role="main" class="ui-content" id="main2">
+            <div class="section-text">Edit kurir</div>
+            <form id="editDataForm">
+                <input type="hidden" value="" id="edit-id" />
+                <div class="form-group">
+                    <label>Nama</label>
+                    <input type="text" class="form-control" id="edit-nama" name="nama" value="" required>
+                </div>
+                <div class="form-group">
+                    <label>No KTP</label>
+                    <input type="number" class="form-control" id="edit-no-ktp" name="no_ktp" value="" required>
+                </div>
+                <div class="form-group">
+                    <label>Nomor Telpon</label>
+                    <input type="number" class="form-control" id="edit-no-telp" name="no_telp" value="" required>
+                </div>
+            </form>
+            <button type="button" class="btn btn-outline-success" id="btn-do-update">Update</button>
+        </div>
+    </div>
+
+    <script src="js/kurir.js" type="text/javascript"></script>
+    <script>
+        Application.initApplication();
+    </script>
+</body>
+
+</html>
