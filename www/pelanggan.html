@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Daftar Pelanggan | Kirim Slur</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery-2.1.1.js" type="text/javascript"></script>
+    <script src="js/jquery.mobile-1.4.5.js" type="text/javascript"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="navbar-header">Kirim Slur</div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="menu">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="#">Pelanggan</a>
+                <a class="nav-item nav-link" href="barang.html" rel="external">Barang</a>
+                <a class="nav-item nav-link" href="kurir.html" rel="external">Kurir</a>
+                <a class="nav-item nav-link" href="pemesanan.html" rel="external">Pemesanan</a>
+            </div>
+        </div>
+    </nav>
+    <div data-role="page" id="list-data">
+        <div data-role="header">
+            <h1>Daftar Pelanggan</h1>
+        </div>
+        <div role="main" class="ui-content">
+            <div class="section-text">Daftar Pelanggan</div>
+            <ul id="list-pelanggan" data-role="listview" data-inset="true" data-filter="true">
+                <li>
+                    <a href="#detail-data?id=1" target="_self" id="detail-pelanggan" data-idpelanggan="1">
+                        <h2>Eka</h2>
+                        <p>Tangerang Selatan</p>
+                        <p><b>15310</b></p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#detail-data?id=2" target="_self" id="detail-pelanggan" data-idpelanggan="2">
+                        <h2>Iqbal</h2>
+                        <p>Jakarta</p>
+                        <p><b>14130</b></p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#detail-data?id=3" target="_self" id="detail-pelanggan" data-idpelanggan="3">
+                        <h2>Eko</h2>
+                        <p>Malang</p>
+                        <p><b>15411</b></p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#detail-data?id=4" target="_self" id="detail-pelanggan" data-idpelanggan="4">
+                        <h2>Eki</h2>
+                        <p>Surabaya</p>
+                        <p><b>12310</b></p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#detail-data?id=4" target="_self" id="detail-pelanggan" data-idpelanggan="4">
+                        <h2>Eki</h2>
+                        <p>Surabaya</p>
+                        <p><b>12310</b></p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#detail-data?id=4" target="_self" id="detail-pelanggan" data-idpelanggan="4">
+                        <h2>Eki</h2>
+                        <p>Surabaya</p>
+                        <p><b>12310</b></p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#detail-data?id=4" target="_self" id="detail-pelanggan" data-idpelanggan="4">
+                        <h2>Eki</h2>
+                        <p>Surabaya</p>
+                        <p><b>12310</b></p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#detail-data?id=4" target="_self" id="detail-pelanggan" data-idpelanggan="4">
+                        <h2>Eki</h2>
+                        <p>Surabaya</p>
+                        <p><b>12310</b></p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#detail-data?id=4" target="_self" id="detail-pelanggan" data-idpelanggan="4">
+                        <h2>Eki</h2>
+                        <p>Surabaya</p>
+                        <p><b>12310</b></p>
+                    </a>
+                </li>
+            </ul>
+            <a href="#tambah-data" target="_self" class="floating-add">
+                <i class="fas fa-plus"></i>
+            </a>
+        </div>
+    </div>
+    <div data-role="page" id="detail-data">
+        <div data-role="header">
+            <h1>Detail Pelanggan</h1>
+        </div>
+        <div role="main" class="ui-content" id="main2">
+            <div class="section-text">Detail Pelanggan</div>
+            <label class="label-text">Nama</label>
+            <p id="p-nama">Eka Iqbal Virgiawan</p>
+            <label class="label-text">Alamat</label>
+            <p id="p-alamat">Jalan Kenangan Indah 1 C No 62</p>
+            <label class="label-text">Kota</label>
+            <p id="p-kota">Malang</p>
+            <label class="label-text">Kode Pos</label>
+            <p id="p-kode-pos">15310</p>
+            <label class="label-text">Nomor HP</label>
+            <p id="p-no-telp">082261517492</p>
+        </div>
+        <div class="container-action">
+            <a onclick="coba()"><button class="btn btn-sm btn-danger">Hapus</button></a>
+            <a href="#edit-data"><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
+        </div>
+    </div>
+
+    <div data-role="page" id="tambah-data">
+        <div data-role="header">
+            <h1>Tambah Pelanggan</h1>
+        </div>
+        <div role="main" class="ui-content" id="main2">
+            <div class="section-text">Tambah Pelanggan</div>
+            <form id="addDataForm">
+                <div class="form-group">
+                    <label>Nama</label>
+                    <input type="text" class="form-control" name="nama" required>
+                </div>
+                <div class="form-group">
+                    <label>Alamat</label>
+                    <input type="text" class="form-control" name="alamat" required>
+                </div>
+                <div class="form-group">
+                    <label>Kota</label>
+                    <input type="text" class="form-control" name="kota" required>
+                </div>
+                <div class="form-group">
+                    <label>Kode Pos</label>
+                    <input type="text" class="form-control" name="kodepos" required>
+                </div>
+                <div class="form-group">
+                    <label>Nomor Telpon</label>
+                    <input type="text" class="form-control" name="no_telp" required>
+                </div>
+            </form>
+            <button type="button" class="btn btn-outline-success" onclick="addData()">Tambah</button>
+        </div>
+    </div>
+
+    <div data-role="page" id="edit-data">
+        <div data-role="header">
+            <h1>Edit Pelanggan</h1>
+        </div>
+        <div role="main" class="ui-content" id="main2">
+            <div class="section-text">Edit Pelanggan</div>
+            <form id="editDataForm">
+                <div class="form-group">
+                    <label>Nama</label>
+                    <input type="text" class="form-control" name="nama" value="" required>
+                </div>
+                <div class="form-group">
+                    <label>Alamat</label>
+                    <input type="text" class="form-control" name="alamat" value="" required>
+                </div>
+                <div class="form-group">
+                    <label>Kota</label>
+                    <input type="text" class="form-control" name="kota" value="" required>
+                </div>
+                <div class="form-group">
+                    <label>Kode Pos</label>
+                    <input type="text" class="form-control" name="kodepos" value="" required>
+                </div>
+                <div class="form-group">
+                    <label>Nomor Telpon</label>
+                    <input type="text" class="form-control" name="no_telp" value="" required>
+                </div>
+            </form>
+            <button type="button" class="btn btn-outline-success" onclick="editData()">Selesai</button>
+        </div>
+    </div>
+
+    <script src="js/pelanggan.js" type="text/javascript"></script>
+    <script>
+        Application.initApplication();
+    </script>
+</body>
+
+</html>
