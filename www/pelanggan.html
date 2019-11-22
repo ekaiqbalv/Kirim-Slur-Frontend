@@ -37,70 +37,7 @@
         </div>
         <div role="main" class="ui-content">
             <div class="section-text">Daftar Pelanggan</div>
-            <ul id="list-pelanggan" data-role="listview" data-inset="true" data-filter="true">
-                <li>
-                    <a href="#detail-data?id=1" target="_self" id="detail-pelanggan" data-idpelanggan="1">
-                        <h2>Eka</h2>
-                        <p>Tangerang Selatan</p>
-                        <p><b>15310</b></p>
-                    </a>
-                </li>
-                <li>
-                    <a href="#detail-data?id=2" target="_self" id="detail-pelanggan" data-idpelanggan="2">
-                        <h2>Iqbal</h2>
-                        <p>Jakarta</p>
-                        <p><b>14130</b></p>
-                    </a>
-                </li>
-                <li>
-                    <a href="#detail-data?id=3" target="_self" id="detail-pelanggan" data-idpelanggan="3">
-                        <h2>Eko</h2>
-                        <p>Malang</p>
-                        <p><b>15411</b></p>
-                    </a>
-                </li>
-                <li>
-                    <a href="#detail-data?id=4" target="_self" id="detail-pelanggan" data-idpelanggan="4">
-                        <h2>Eki</h2>
-                        <p>Surabaya</p>
-                        <p><b>12310</b></p>
-                    </a>
-                </li>
-                <li>
-                    <a href="#detail-data?id=4" target="_self" id="detail-pelanggan" data-idpelanggan="4">
-                        <h2>Eki</h2>
-                        <p>Surabaya</p>
-                        <p><b>12310</b></p>
-                    </a>
-                </li>
-                <li>
-                    <a href="#detail-data?id=4" target="_self" id="detail-pelanggan" data-idpelanggan="4">
-                        <h2>Eki</h2>
-                        <p>Surabaya</p>
-                        <p><b>12310</b></p>
-                    </a>
-                </li>
-                <li>
-                    <a href="#detail-data?id=4" target="_self" id="detail-pelanggan" data-idpelanggan="4">
-                        <h2>Eki</h2>
-                        <p>Surabaya</p>
-                        <p><b>12310</b></p>
-                    </a>
-                </li>
-                <li>
-                    <a href="#detail-data?id=4" target="_self" id="detail-pelanggan" data-idpelanggan="4">
-                        <h2>Eki</h2>
-                        <p>Surabaya</p>
-                        <p><b>12310</b></p>
-                    </a>
-                </li>
-                <li>
-                    <a href="#detail-data?id=4" target="_self" id="detail-pelanggan" data-idpelanggan="4">
-                        <h2>Eki</h2>
-                        <p>Surabaya</p>
-                        <p><b>12310</b></p>
-                    </a>
-                </li>
+            <ul id="list-pelanggan" data-role="listview" data-inset="true" data-filter="true">                
             </ul>
             <a href="#tambah-data" target="_self" class="floating-add">
                 <i class="fas fa-plus"></i>
@@ -114,18 +51,18 @@
         <div role="main" class="ui-content" id="main2">
             <div class="section-text">Detail Pelanggan</div>
             <label class="label-text">Nama</label>
-            <p id="p-nama">Eka Iqbal Virgiawan</p>
+            <p id="p-nama"></p>
             <label class="label-text">Alamat</label>
-            <p id="p-alamat">Jalan Kenangan Indah 1 C No 62</p>
+            <p id="p-alamat"></p>
             <label class="label-text">Kota</label>
-            <p id="p-kota">Malang</p>
+            <p id="p-kota"></p>
             <label class="label-text">Kode Pos</label>
-            <p id="p-kode-pos">15310</p>
+            <p id="p-kode-pos"></p>
             <label class="label-text">Nomor HP</label>
-            <p id="p-no-telp">082261517492</p>
+            <p id="p-no-telp"></p>
         </div>
         <div class="container-action">
-            <a onclick="coba()"><button class="btn btn-sm btn-danger">Hapus</button></a>
+            <a id="delete-pelanggan" data-idpelanggan=""><button class="btn btn-sm btn-danger">Hapus</button></a>
             <a href="#edit-data"><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
         </div>
     </div>

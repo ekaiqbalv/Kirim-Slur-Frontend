@@ -1,15 +1,19 @@
 var Application = {
   initApplication: function() {
     $(window).load("pageinit", "#list-data", function() {
-      Application.initShowMhs();
+      Application.getListPelanggan();
     });
-    $(document).on("click", "#detail-data", function() {
-      var nim = $(this).data("idpelanggan");
-      Application.initShowDetailMhs(nim);
+    $(document).on("click", "#detail-pelanggan", function() {
+      let id = $(this).data("idpelanggan");
+      Application.getPelangganById(id);
+    });
+    $(document).on("click", "#delete-pelanggan", function() {
+      let id = $(this).data("idpelanggan");
+      Application.deletePelanggan(id);
     });
   },
 
-  initShowMhs: function() {
+  getListPelanggan: function() {
     $.ajax({
       url: "http://kirimslur-server.herokuapp.com/pelanggan",
       type: "get",
@@ -20,20 +24,20 @@ var Application = {
         });
       },
       success: function(dataObject) {
-        for (let index = 0; index < dataObject.length; index++) {
-          var appendList =
+        for (let index = 0; index < dataObject.data.length; index++) {
+          var listPelanggan =
             '<li><a href="#detail-data?id=' +
-            dataObject[index].id +
+            dataObject.data[index].id +
             '" target="_self" id="detail-pelanggan" data-idpelanggan="' +
-            dataObject[index].id +
+            dataObject.data[index].id +
             '"><h2>' +
-            dataObject[index].nama +
+            dataObject.data[index].nama +
             "</h2><p>" +
-            dataObject[index].kota +
+            dataObject.data[index].kota +
             "</p><p><b>" +
-            dataObject[index].kodepos +
+            dataObject.data[index].kodepos +
             "</b></p></a></li>";
-          $("#list-pelanggan").append(appendList);
+          $("#list-pelanggan").append(listPelanggan);
           $("#list-pelanggan").listview("refresh");
         }
       },
@@ -43,9 +47,9 @@ var Application = {
     });
   },
 
-  initShowDetailMhs: function(nim) {
+  getPelangganById: function(id) {
     $.ajax({
-      url: "http://ekaiqbalv.000webhostapp.com/web_service.php",
+      url: "http://kirimslur-server.herokuapp.com/pelanggan/" + id,
       type: "get",
       beforeSend: function() {
         $.mobile.loading("show", {
@@ -54,27 +58,25 @@ var Application = {
         });
       },
       success: function(dataObject) {
-        for (let index = 0; index < dataObject.length; index++) {
-          if (dataObject[index].NIM == nim) {
-            $(
-              "#p-nim,#p-nama,#p-jurusan,#p-fakultas,#p-alamat,#p-nohp"
-            ).empty();
-            $("#p-nim").append("<b>NIM: </b>" + dataObject[index].NIM);
-            $("#p-nama").append("<b>Nama: </b>" + dataObject[index].Nama);
-            $("#p-jurusan").append(
-              "<b>Jurusan: </b>" + dataObject[index].Jurusan
-            );
-            $("#p-fakultas").append(
-              "<b>Fakultas: </b>" + dataObject[index].Fakultas
-            );
-            $("#p-alamat").append("<b>Alamat: </b>" + dataObject[index].Alamat);
-            $("#p-nohp").append("<b>NoHp: </b>" + dataObject[index].NoHp);
-          }
-        }
+        $("#p-nama").html(dataObject.data.nama);
+        $("#p-alamat").html(dataObject.data.alamat);
+        $("#p-kota").html(dataObject.data.kota);
+        $("#p-kode-pos").html(dataObject.data.kodepos);
+        $("#p-no-telp").html(dataObject.data.no_telp);
+        $("#delete-pelanggan").data("idpelanggan", dataObject.data.id);
       },
       complete: function(dataObject) {
         $.mobile.loading("hide");
       }
     });
-  }
+  },
+  deletePelanggan: function(id) {
+    $.ajax({
+      url: "http://kirimslur-server.herokuapp.com/pelanggan/" + id,
+      type: "delete",
+      success: function(dataObject) {
+        window.location.replace("pelanggan.html");
+      }
+    });
+  },
 };
