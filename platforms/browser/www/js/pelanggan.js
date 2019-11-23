@@ -76,7 +76,7 @@ var Application = {
       type: "get",
       beforeSend: function() {
         $.mobile.loading("show", {
-          text: "Sedang mengambill data...",
+          text: "Sedang mengambil data...",
           textVisible: true
         });
       },
@@ -109,7 +109,7 @@ var Application = {
       type: "get",
       beforeSend: function() {
         $.mobile.loading("show", {
-          text: "Sedang mengambill data...",
+          text: "Sedang mengambil data...",
           textVisible: true
         });
       },
