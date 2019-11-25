@@ -54,7 +54,7 @@ var Application = {
       type: "get",
       beforeSend: function () {
         $.mobile.loading("show", {
-          text: "Please wait while retrieving data...",
+          text: "Mengambil data kurir...",
           textVisible: true
         })
       },
@@ -84,7 +84,7 @@ var Application = {
       type: "get",
       beforeSend: function () {
         $.mobile.loading("show", {
-          text: "Please wait while retrieving data...",
+          text: "Mengambil data kurir...",
           textVisible: true
         })
       },
@@ -106,29 +106,41 @@ var Application = {
       contentType: "application/json",
       dataType: "json",
       data: JSON.stringify(data),
+      beforeSend: function () {
+        $.mobile.loading("show", {
+          text: "Menambah data kurir...",
+          textVisible: true
+        })
+      },
       success: function (dataObject, textStatus, xhr) {
-        if(xhr.status == 201){
+        if (xhr.status == 201) {
           window.location.replace("index.html")
         }
       },
-      error: function () {
-        
+      complete: function () {
+        $.mobile.loading("hide")
       }
     })
   },
-  
+
   deleteKurir: function (id) {
     $.ajax({
       url: "http://kirimslur-server.herokuapp.com/kurir/" + id,
       type: "delete",
+      beforeSend: function () {
+        $.mobile.loading("show", {
+          text: "Menghapus data kurir...",
+          textVisible: true
+        })
+      },
       success: function (dataObject, textStatus, xhr) {
-        if(xhr.status == 204){          
+        if (xhr.status == 204) {
           window.location.replace("index.html")
         }
       },
-      error: function () {
-
-      },
+      complete: function () {
+        $.mobile.loading("hide")
+      }
     })
   },
 
@@ -139,13 +151,19 @@ var Application = {
       contentType: "application/json",
       dataType: "json",
       data: JSON.stringify(data),
+      beforeSend: function () {
+        $.mobile.loading("show", {
+          text: "Memperbarui data kurir...",
+          textVisible: true
+        })
+      },
       success: function (dataObject, textStatus, xhr) {
-        if(xhr.status == 200){
+        if (xhr.status == 200) {
           window.location.replace("index.html")
         }
       },
-      error: function () {
-
+      complete: function () {
+        $.mobile.loading("hide")
       }
     })
   }
