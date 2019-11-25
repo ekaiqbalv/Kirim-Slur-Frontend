@@ -14,7 +14,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    <script src="js/pemesanan.js" type="text/javascript"></script>
+    <script src="js/moment.js" type="text/javascript"></script>
+        <script src="js/pemesanan.js" type="text/javascript"></script>
     <script>
         Application.initApplication();
     </script>
@@ -94,35 +95,45 @@
             <form id="addDataPemesanan">
                 <div class="form-group">
                     <label>Tanggal Pemesanan</label>
-                    <input type="date" class="form-control" name="tglpemesanan">
+                    <input type="datetime-local" class="form-control" name="tglpemesanan" id="input-tglpemesanan">
                 </div>
                 <div class="form-group">
-                    <label>Kurir</label>
-                    <!-- <input type="text" class="form-control" name="kurir"> -->
-                    <select id="select-kurir"></select>
-                </div>
-                <div class="form-group">
-                    <label>Pelanggan</label>
+                    <label>Pengirim</label>
                     <!-- <input type="text" class="form-control" name="pelanggan"> -->
-                    <select id="select-pelanggan"></select>
+                    <select id="select-pengirim"></select>
                 </div>
+                <div class="form-group">
+                        <label>Penerima</label>
+                        <!-- <input type="text" class="form-control" name="pelanggan"> -->
+                        <select id="select-penerima"></select>
+                    </div>
                 <div class="form-group">
                     <label>Barang</label>
                     <!-- <input type="text" class="form-control" name="barang"> -->
                     <select id="select-barang"></select>
                 </div>
                 <div class="form-group">
-                    <label>Kategori</label>
+                        <label>Kurir</label>
+                        <!-- <input type="text" class="form-control" name="kurir"> -->
+                        <select id="select-kurir"></select>
+                    </div>
+                <div class="form-group">
+                    <label>Ongkir</label>
+                    <input type="number" min="0" class="form-control" name="ongkir" id="input-ongkir">
+                    <!-- <select id="select-barang"></select> -->
+                </div>
+                <div class="form-group">
+                    <label>Jenis Pengiriman</label>
                     <!-- <input type="number" class="form-control" name="kategori"> -->
-                    <select name="select-kategori" id="select-kategori-pesan">
-                        <option value="Dokumen">Dokumen</option>
-                        <option value="Makanan">Makanan</option>
-                        <option value="Mudah Pecah">Mudah Pecah</option>
+                    <select name="select-kirim" id="select-jenis-kirim">
+                        <option value="10000">Express</option>
+                        <option value="20000">Regular</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Total</label>
-                    <p id="show-total"></p>
+                    <!-- <p id="show-total"></p> -->
+                    <input type="text" value="" class="form-control" name="total" id="total" readonly>
                 </div>
             </form>
             <button id="btn-tambah-pemesanan" class="btn btn-outline-success">Tambah</button>
