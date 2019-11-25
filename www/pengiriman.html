@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Daftar Pemesanan | Kirim Slur</title>
+    <title>Daftar pengiriman | Kirim Slur</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -15,7 +15,7 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <script src="js/moment.js" type="text/javascript"></script>
-        <script src="js/pemesanan.js" type="text/javascript"></script>
+        <script src="js/pengiriman.js" type="text/javascript"></script>
     <script>
         Application.initApplication();
     </script>
@@ -32,32 +32,32 @@
                 <a class="nav-item nav-link" href="pelanggan.html">Pelanggan</a>
                 <a class="nav-item nav-link" href="barang.html" rel="external">Barang</a>
                 <a class="nav-item nav-link" href="index.html" rel="external">Kurir</a>
-                <a class="nav-item nav-link" href="pemesanan.html" rel="external">Pemesanan</a>
+                <a class="nav-item nav-link" href="pengiriman.html" rel="external">pengiriman</a>
             </div>
         </div>
     </nav>
     <div data-role="page" id="list-data">
         <div data-role="header">
-            <h1>Daftar Pemesanan</h1>
+            <h1>Daftar pengiriman</h1>
         </div>
         <div role="main" class="ui-content">
-            <div class="section-text">Daftar Pemesanan</div>
-            <ul id="list-pemesanan" data-role="listview" data-inset="true" data-filter="true">
+            <div class="section-text">Daftar pengiriman</div>
+            <ul id="list-pengiriman" data-role="listview" data-inset="true" data-filter="true">
             </ul>
-            <a href="#tambah-data" target="_self" class="floating-add">
+            <a href="#tambah-data" target="_self" id="btn-tambah-data" class="floating-add">
                 <i class="fas fa-plus"></i>
             </a>
         </div>
     </div>
     <div data-role="page" id="detail-data">
         <div data-role="header">
-            <h1>Detail Pemesanan</h1>
+            <h1>Detail pengiriman</h1>
         </div>
         <div role="main" class="ui-content" id="main2">
-            <div class="section-text">Detail Pemesanan</div>
+            <div class="section-text">Detail pengiriman</div>
             <label class="label-text">Nomor Resi</label>
             <p id="p-noresi"></p>
-            <label class="label-text">Tanggal Pemesanan</label>
+            <label class="label-text">Tanggal pengiriman</label>
             <p id="p-tglpesan"></p>
             <label class="label-text">Nama Pelanggan</label>
             <p id="p-pelanggan"></p>
@@ -76,7 +76,7 @@
                     <h2>Hapus Data</h2>
                 </div>
                 <div role="main" class="ui-content">
-                    <h5 class="ui-title">Apa anda yakin ingin menghapus data pemesanan ini?</h5>
+                    <h5 class="ui-title">Apa anda yakin ingin menghapus data pengiriman ini?</h5>
                     <a href="#" class="ui-btn ui-btn-inline btn btn-secondary" data-rel="back">Batal</a>                    
                     <a class="ui-btn ui-btn-inline btn btn-danger" data-rel="back" data-transition="flow" id="btn-hapus-pelanggan" data-idpelanggan="">Ya, Hapus</a>
                 </div>
@@ -88,14 +88,14 @@
 
     <div data-role="page" id="tambah-data">
         <div data-role="header">
-            <h1>Tambah Pemesanan</h1>
+            <h1>Tambah pengiriman</h1>
         </div>
         <div role="main" class="ui-content" id="main2">
-            <div class="section-text">Tambah Pemesanan</div>
-            <form id="addDataPemesanan">
+            <div class="section-text">Tambah pengiriman</div>
+            <form id="addDatapengiriman">
                 <div class="form-group">
-                    <label>Tanggal Pemesanan</label>
-                    <input type="datetime-local" class="form-control" name="tglpemesanan" id="input-tglpemesanan">
+                    <label>Tanggal pengiriman</label>
+                    <input type="datetime-local" class="form-control" name="tglpengiriman" id="input-tglpengiriman">
                 </div>
                 <div class="form-group">
                     <label>Pengirim</label>
@@ -136,20 +136,20 @@
                     <input type="text" value="" class="form-control" name="total" id="total" readonly>
                 </div>
             </form>
-            <button id="btn-tambah-pemesanan" class="btn btn-outline-success">Tambah</button>
+            <button id="btn-tambah-pengiriman" class="btn btn-outline-success">Tambah</button>
         </div>
     </div>
 
     <div data-role="page" id="edit-data">
         <div data-role="header">
-            <h1>Edit Pemesanan</h1>
+            <h1>Edit pengiriman</h1>
         </div>
         <div role="main" class="ui-content" id="main2">
-            <div class="section-text">Edit Pemesanan</div>
-            <form id="editDataPemesanan">
+            <div class="section-text">Edit pengiriman</div>
+            <form id="editDatapengiriman">
                 <div class="form-group">
-                    <label>Tanggal Pemesanan</label>
-                    <input type="date" class="form-control" name="tglpemesanan" disabled>
+                    <label>Tanggal pengiriman</label>
+                    <input type="date" class="form-control" name="tglpengiriman" disabled>
                 </div>
                 <div class="form-group">
                     <label>Kurir</label>
@@ -179,7 +179,7 @@
                         <p id="show-total"></p>
                 </div>
             </form>
-            <button id="btn-edit-pemesanan" data-idpemesanan="" type="button"
+            <button id="btn-edit-pengiriman" data-idpengiriman="" type="button"
                 class="btn btn-outline-success">Selesai</button>
         </div>
     </div>

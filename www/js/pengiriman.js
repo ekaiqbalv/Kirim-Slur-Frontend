@@ -15,7 +15,7 @@ var Application = {
       $('#p-no-telp').append(dataObject['data'].no_telp)
     })
 
-    $(window).load("pageinit", "#tambah-data", function () {
+    $(document).on("click", "#btn-tambah-data", function () {
       Application.getKurir()
       Application.getPengirim()
       Application.getPenerima()
@@ -97,11 +97,11 @@ var Application = {
 
   getPemesanan: function () {
     $.ajax({
-      url: "http://kirimslur-server.herokuapp.com/pemesanan",
+      url: "http://kirimslur-server.herokuapp.com/pengiriman",
       type: "get",
       beforeSend: function () {
         $.mobile.loading("show", {
-          text: "Mengambil data Pemesanan...",
+          text: "Mengambil data Pengiriman...",
           textVisible: true
         })
       },
@@ -110,12 +110,12 @@ var Application = {
           var appendList =
             '<li><a href="#detail-data?id=' + result.id +
             '" target="_self" id="detail-Pemesanan" data-idPemesanan="' + result.id +
-            '"><h2>' + result.nama +
-            "</h2><p>" + result.no_ktp +
-            "</p><p><b>" + result.no_telp +
+            '"><h2>' + result.no_resi +
+            "</h2><p>" + result.tanggal +
+            "</p><p><b>" + result.total +
             "</b></p></a></li>"
-          $("#list-Pemesanan").append(appendList)
-          $("#list-Pemesanan").listview("refresh")
+          $("#list-pemesanan").append(appendList)
+          $("#list-pemesanan").listview("refresh")
         })
       },
       complete: function () {
@@ -231,11 +231,11 @@ var Application = {
   getByIdPemesanan: async function (id) {
     let PemesananData
     await $.ajax({
-      url: "http://kirimslur-server.herokuapp.com/pemesanan/" + id,
+      url: "http://kirimslur-server.herokuapp.com/pengiriman/" + id,
       type: "get",
       beforeSend: function () {
         $.mobile.loading("show", {
-          text: "Mengambil data Pemesanan...",
+          text: "Mengambil data Pengiriman...",
           textVisible: true
         })
       },
@@ -265,7 +265,7 @@ var Application = {
       },
       success: function (dataObject, textStatus, xhr) {
         if (xhr.status == 201) {
-          window.location.replace("index.html")
+          window.location.replace("pengiriman.html")
         }
       },
       complete: function () {
@@ -276,17 +276,17 @@ var Application = {
 
   deletePemesanan: function (id) {
     $.ajax({
-      url: "http://kirimslur-server.herokuapp.com/pemesanan/" + id,
+      url: "http://kirimslur-server.herokuapp.com/pengiriman/" + id,
       type: "delete",
       beforeSend: function () {
         $.mobile.loading("show", {
-          text: "Menghapus data Pemesanan...",
+          text: "Menghapus data Pengiriman...",
           textVisible: true
         })
       },
       success: function (dataObject, textStatus, xhr) {
         if (xhr.status == 204) {
-          window.location.replace("index.html")
+          window.location.replace("pengiriman.html")
         }
       },
       complete: function () {
@@ -297,20 +297,20 @@ var Application = {
 
   updatePemesanan: function (id, data) {
     $.ajax({
-      url: "http://kirimslur-server.herokuapp.com/pemesanan/" + id,
+      url: "http://kirimslur-server.herokuapp.com/pengiriman/" + id,
       type: "PUT",
       contentType: "application/json",
       dataType: "json",
       data: JSON.stringify(data),
       beforeSend: function () {
         $.mobile.loading("show", {
-          text: "Memperbarui data Pemesanan...",
+          text: "Memperbarui data Pengiriman...",
           textVisible: true
         })
       },
       success: function (dataObject, textStatus, xhr) {
         if (xhr.status == 200) {
-          window.location.replace("index.html")
+          window.location.replace("pengiriman.html")
         }
       },
       complete: function () {
