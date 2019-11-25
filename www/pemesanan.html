@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Daftar Pemesanan | Kirim Slur</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery-2.1.1.js" type="text/javascript"></script>
+    <script src="js/jquery.mobile-1.4.5.js" type="text/javascript"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="js/pemesanan.js" type="text/javascript"></script>
+    <script>
+        Application.initApplication();
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="navbar-header">Kirim Slur</div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="menu">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="pelanggan.html">Pelanggan</a>
+                <a class="nav-item nav-link" href="barang.html" rel="external">Barang</a>
+                <a class="nav-item nav-link" href="index.html" rel="external">Kurir</a>
+                <a class="nav-item nav-link" href="pemesanan.html" rel="external">Pemesanan</a>
+            </div>
+        </div>
+    </nav>
+    <div data-role="page" id="list-data">
+        <div data-role="header">
+            <h1>Daftar Pemesanan</h1>
+        </div>
+        <div role="main" class="ui-content">
+            <div class="section-text">Daftar Pemesanan</div>
+            <ul id="list-pemesanan" data-role="listview" data-inset="true" data-filter="true">
+            </ul>
+            <a href="#tambah-data" target="_self" class="floating-add">
+                <i class="fas fa-plus"></i>
+            </a>
+        </div>
+    </div>
+    <div data-role="page" id="detail-data">
+        <div data-role="header">
+            <h1>Detail Pemesanan</h1>
+        </div>
+        <div role="main" class="ui-content" id="main2">
+            <div class="section-text">Detail Pemesanan</div>
+            <label class="label-text">Nomor Resi</label>
+            <p id="p-noresi"></p>
+            <label class="label-text">Tanggal Pemesanan</label>
+            <p id="p-tglpesan"></p>
+            <label class="label-text">Nama Pelanggan</label>
+            <p id="p-pelanggan"></p>
+            <label class="label-text">Nama Barang</label>
+            <p id="p-barang"></p>
+            <label class="label-text">Nama Kurir</label>
+            <p id="p-kurir"></p>
+            <label class="label-text">Kategori</label>
+            <p id="p-kategori"></p>
+            <label class="label-text">Total</label>
+            <p id="p-total"></p>
+        </div>
+        <div class="container-action">
+            <div data-role="popup" id="popupKonfirmasiHapus" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
+                <div data-role="header" data-theme="a">
+                    <h2>Hapus Data</h2>
+                </div>
+                <div role="main" class="ui-content">
+                    <h5 class="ui-title">Apa anda yakin ingin menghapus data pemesanan ini?</h5>
+                    <a href="#" class="ui-btn ui-btn-inline btn btn-secondary" data-rel="back">Batal</a>                    
+                    <a class="ui-btn ui-btn-inline btn btn-danger" data-rel="back" data-transition="flow" id="btn-hapus-pelanggan" data-idpelanggan="">Ya, Hapus</a>
+                </div>
+            </div>
+            <a href="#popupKonfirmasiHapus" data-rel="popup" data-position-to="window" data-transition="pop"><button class="btn btn-sm btn-danger">Hapus</button></a>
+            <a id="edit-pelanggan" data-idpelanggan=""><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
+        </div>
+    </div>
+
+    <div data-role="page" id="tambah-data">
+        <div data-role="header">
+            <h1>Tambah Pemesanan</h1>
+        </div>
+        <div role="main" class="ui-content" id="main2">
+            <div class="section-text">Tambah Pemesanan</div>
+            <form id="addDataPemesanan">
+                <div class="form-group">
+                    <label>Tanggal Pemesanan</label>
+                    <input type="date" class="form-control" name="tglpemesanan">
+                </div>
+                <div class="form-group">
+                    <label>Kurir</label>
+                    <!-- <input type="text" class="form-control" name="kurir"> -->
+                    <select id="select-kurir"></select>
+                </div>
+                <div class="form-group">
+                    <label>Pelanggan</label>
+                    <!-- <input type="text" class="form-control" name="pelanggan"> -->
+                    <select id="select-pelanggan"></select>
+                </div>
+                <div class="form-group">
+                    <label>Barang</label>
+                    <!-- <input type="text" class="form-control" name="barang"> -->
+                    <select id="select-barang"></select>
+                </div>
+                <div class="form-group">
+                    <label>Kategori</label>
+                    <!-- <input type="number" class="form-control" name="kategori"> -->
+                    <select name="select-kategori" id="select-kategori-pesan">
+                        <option value="Dokumen">Dokumen</option>
+                        <option value="Makanan">Makanan</option>
+                        <option value="Mudah Pecah">Mudah Pecah</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Total</label>
+                    <p id="show-total"></p>
+                </div>
+            </form>
+            <button id="btn-tambah-pemesanan" class="btn btn-outline-success">Tambah</button>
+        </div>
+    </div>
+
+    <div data-role="page" id="edit-data">
+        <div data-role="header">
+            <h1>Edit Pemesanan</h1>
+        </div>
+        <div role="main" class="ui-content" id="main2">
+            <div class="section-text">Edit Pemesanan</div>
+            <form id="editDataPemesanan">
+                <div class="form-group">
+                    <label>Tanggal Pemesanan</label>
+                    <input type="date" class="form-control" name="tglpemesanan" disabled>
+                </div>
+                <div class="form-group">
+                    <label>Kurir</label>
+                    <select name="select-kurir" id="select-barang-kurir"></select>
+                    <option value=""></option>
+                </div>
+                <div class="form-group">
+                    <label>Pelanggan</label>
+                    <select name="select-pelanggan" id="select-barang-pelanggan"></select>
+                    <option value=""></option>
+                </div>
+                <div class="form-group">
+                    <label>Barang</label>
+                    <select name="select-barang" id="select-barang-pesan"></select>
+                    <option value=""></option>
+                </div>
+                <div class="form-group">
+                    <label>Kategori</label>
+                    <select name="select-kategori" id="select-kategori-pesan">
+                            <option value="Dokumen">Dokumen</option>
+                            <option value="Makanan">Makanan</option>
+                            <option value="Mudah Pecah">Mudah Pecah</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                        <label>Total</label>
+                        <p id="show-total"></p>
+                </div>
+            </form>
+            <button id="btn-edit-pemesanan" data-idpemesanan="" type="button"
+                class="btn btn-outline-success">Selesai</button>
+        </div>
+    </div>
+</body>
+
+</html>
