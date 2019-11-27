@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Daftar Barang | Kirim Slur</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery-2.1.1.js" type="text/javascript"></script>
+    <script src="js/jquery.mobile-1.4.5.js" type="text/javascript"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="js/barang.js" type="text/javascript"></script>
+    <script>
+        Application.initApplication();
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="navbar-header">Kirim Slur</div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="menu">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="pelanggan.html">Pelanggan</a>
+                <a class="nav-item nav-link" href="barang.html" rel="external">Barang</a>
+                <a class="nav-item nav-link" href="/" rel="external">Kurir</a>
+                <a class="nav-item nav-link" href="pemesanan.html" rel="external">Pemesanan</a>
+            </div>
+        </div>
+    </nav>
+    <div data-role="page" id="list-data">
+        <div data-role="header">
+            <h1>Daftar Barang</h1>
+        </div>
+        <div role="main" class="ui-content">
+            <div class="section-text">Daftar Barang</div>
+            <ul id="list-barang" data-role="listview" data-inset="true" data-filter="true">
+            </ul>
+            <a href="#tambah-data" target="_self" class="floating-add">
+                <i class="fas fa-plus"></i>
+            </a>
+        </div>
+    </div>
+    <div data-role="page" id="detail-data">
+        <div data-role="header">
+            <h1>Detail Barang</h1>
+        </div>
+        <div role="main" class="ui-content" id="main2">
+            <div class="section-text">Detail Barang</div>
+            <input type="hidden" value="" id="i-id" />
+            <label class="label-text">Nama Barang</label>
+            <p id="p-nama"></p>
+            <label class="label-text">Jenis Barang</label>
+            <p id="p-jenis"></p>
+            <label class="label-text">Berat Barang</label>
+            <p id="p-berat"></p>
+        </div>
+        <div class="container-action">
+            <div data-role="popup" id="popupKonfirmasiHapus" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
+                <div data-role="header" data-theme="a">
+                    <h2>Hapus Data</h2>
+                </div>
+                <div role="main" class="ui-content">
+                    <h5 class="ui-title">Apa anda yakin ingin menghapus data barang ini?</h5>
+                    <a href="#" class="ui-btn ui-btn-inline btn btn-secondary" data-rel="back">Batal</a>                    
+                    <a class="ui-btn ui-btn-inline btn btn-danger" data-rel="back" data-transition="flow" data-idbarang="" id="btn-hapus-barang">Ya, Hapus</a>
+                </div>
+            </div>
+            <a href="#popupKonfirmasiHapus" data-rel="popup" data-position-to="window" data-transition="pop"><button class="btn btn-sm btn-danger">Hapus</button></a>
+            <a id="edit-barang" data-idbarang=""><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
+        </div>
+    </div>
+
+    <div data-role="page" id="tambah-data">
+        <div data-role="header">
+            <h1>Tambah Barang</h1>
+        </div>
+        <div role="main" class="ui-content" id="main2">
+            <div class="section-text">Tambah Barang</div>
+            <form id="addDataBarang">
+                <div class="form-group">
+                    <label>Nama Barang</label>
+                    <input type="text" class="form-control" name="nama">
+                </div>
+                <div class="form-group">
+                    <label>Jenis Barang</label>
+                    <input type="text" class="form-control" name="jenis">
+                </div>
+                <div class="form-group">
+                    <label>Berat Barang</label>
+                    <input type="text" class="form-control" name="berat">
+                </div>
+            </form>
+            <button id="btn-tambah-barang" class="btn btn-outline-success">Tambah</button>
+        </div>
+    </div>
+
+    <div data-role="page" id="edit-data">
+        <div data-role="header">
+            <h1>Edit Barang</h1>
+        </div>
+        <div role="main" class="ui-content" id="main2">
+            <div class="section-text">Edit Barang</div>
+            <form id="editDataBarang">
+                <div class="form-group">
+                    <label>Nama Barang</label>
+                    <input type="text" class="form-control" id="input-nama" name="nama" disabled>
+                </div>
+                <div class="form-group">
+                    <label>Jenis Barang</label>
+                    <input type="text" class="form-control" id="input-jenis" name="jenis">
+                </div>
+                <div class="form-group">
+                    <label>Berat Barang</label>
+                    <input type="text" class="form-control" id="input-berat" name="berat">
+                </div>
+            </form>
+            <button id="btn-edit-barang" data-idbarang="" type="button"
+                class="btn btn-outline-success">Selesai</button>
+        </div>
+    </div>
+</body>
+
+</html>
