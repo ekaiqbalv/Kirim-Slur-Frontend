@@ -16,10 +16,7 @@ var Application = {
     })
 
     $(document).on("click", "#tambah-data-kurir", function () {
-      let nama = $("#input-nama").val()
-      let no_ktp = $("#input-no-ktp").val()
-      let no_telp = $("#input-no-telp").val()
-      const kurirData = { nama, no_ktp, no_telp }
+      const kurirData = $("#addDataKurir").serialize()
       Application.addKurir(kurirData)
     })
 
@@ -40,10 +37,7 @@ var Application = {
 
     $(document).on("click", "#btn-do-update", function () {
       let id = $("#edit-id").val()
-      let nama = $('#edit-nama').val()
-      let no_ktp = $('#edit-no-ktp').val()
-      let no_telp = $('#edit-no-telp').val()
-      const kurirData = { nama, no_ktp, no_telp }
+      const kurirData = $("#editDataKurir").serialize()
       Application.updateKurir(id, kurirData)
     })
   },
@@ -61,15 +55,19 @@ var Application = {
       success: function (dataObject, textStatus, xhr) {
         dataObject['data'].map(result => {
           var appendList =
-            '<li><a href="#detail-data?id=' + result.id +
-            '" target="_self" id="detail-kurir" data-idkurir="' + result.id +
-            '"><h2>' + result.nama +
-            "</h2><p>" + result.no_ktp +
-            "</p><p><b>" + result.no_telp +
-            "</b></p></a></li>"
+            `<li>
+              <a href="#detail-data" target="_self" id="detail-kurir" data-idkurir="${result.id}">
+                <h2>${result.nama}</h2>
+                <p>${result.no_ktp}</p>
+                <p><b>${result.no_telp}</b></p>
+              </a>
+            </li>`
           $("#list-kurir").append(appendList)
           $("#list-kurir").listview("refresh")
         })
+      },
+      error: function ({ 'responseJSON': error }) {
+        alert(error.message)
       },
       complete: function () {
         $.mobile.loading("hide")
@@ -88,14 +86,16 @@ var Application = {
           textVisible: true
         })
       },
-      success: function (dataObject, textStatus, xhr) {
+      success: function (dataObject) {
         kurirData = dataObject
+      },
+      error: function ({ 'responseJSON': error }) {
+        alert(error.message)
       },
       complete: function () {
         $.mobile.loading("hide")
       }
     })
-
     return kurirData
   },
 
@@ -103,19 +103,18 @@ var Application = {
     $.ajax({
       url: "http://kirimslur-server.herokuapp.com/kurir",
       type: "post",
-      contentType: "application/json",
-      dataType: "json",
-      data: JSON.stringify(data),
+      data,
       beforeSend: function () {
         $.mobile.loading("show", {
           text: "Menambah data kurir...",
           textVisible: true
         })
       },
-      success: function (dataObject, textStatus, xhr) {
-        if (xhr.status == 201) {
-          window.location.replace("index.html")
-        }
+      success: function (dataObject) {
+        window.location.replace("index.html")
+      },
+      error: function ({ 'responseJSON': error }) {
+        alert(error.message)
       },
       complete: function () {
         $.mobile.loading("hide")
@@ -133,10 +132,11 @@ var Application = {
           textVisible: true
         })
       },
-      success: function (dataObject, textStatus, xhr) {
-        if (xhr.status == 204) {
-          window.location.replace("index.html")
-        }
+      success: function (dataObject) {
+        window.location.replace("index.html")
+      },
+      error: function ({ 'responseJSON': error }) {
+        alert(error.message)
       },
       complete: function () {
         $.mobile.loading("hide")
@@ -148,19 +148,18 @@ var Application = {
     $.ajax({
       url: "http://kirimslur-server.herokuapp.com/kurir/" + id,
       type: "PUT",
-      contentType: "application/json",
-      dataType: "json",
-      data: JSON.stringify(data),
+      data,
       beforeSend: function () {
         $.mobile.loading("show", {
           text: "Memperbarui data kurir...",
           textVisible: true
         })
       },
-      success: function (dataObject, textStatus, xhr) {
-        if (xhr.status == 200) {
-          window.location.replace("index.html")
-        }
+      success: function (dataObject) {
+        window.location.replace("index.html")
+      },
+      error: function ({ 'responseJSON': error }) {
+        alert(error.message)
       },
       complete: function () {
         $.mobile.loading("hide")
@@ -168,3 +167,7 @@ var Application = {
     })
   }
 }
+
+$("#input-no-ktp, #edit-no-ktp").on("input", function () {
+  this.value = this.value.slice(0, this.maxLength)
+})

@@ -26,7 +26,7 @@
             <div class="navbar-nav">
                 <a class="nav-item nav-link" href="pelanggan.html" rel="external">Pelanggan</a>
                 <a class="nav-item nav-link" href="barang.html" rel="external">Barang</a>
-                <a class="nav-item nav-link" href="index.html" rel="external">Kurir</a>
+                <a class="nav-item nav-link" href="" rel="external" onclick="return false">Kurir</a>
                 <a class="nav-item nav-link" href="pengiriman.html" rel="external">Pengiriman</a>
             </div>
         </div>
@@ -79,18 +79,18 @@
         </div>
         <div role="main" class="ui-content" id="main2">
             <div class="section-text">Tambah kurir</div>
-            <form id="addDataForm">
+            <form id="addDataKurir">
                 <div class="form-group">
                     <label>Nama</label>
-                    <input type="text" class="form-control" id="input-nama" name="nama" required>
+                    <input type="text" class="form-control" name="nama" maxlength="100" required>
                 </div>
                 <div class="form-group">
                     <label>No KTP</label>
-                    <input type="number" class="form-control" id="input-no-ktp" name="no_ktp" required>
+                    <input type="number" class="form-control" name="no_ktp" maxlength="16" id="input-no-ktp" required>
                 </div>
                 <div class="form-group">
                     <label>Nomor Telpon</label>
-                    <input type="number" class="form-control" id="input-no-telp" name="no_telp" required>
+                    <input type="tel" class="form-control" name="no_telp" maxlength="16" required>
                 </div>
             </form>
             <button type="button" class="btn btn-outline-success" id="tambah-data-kurir">Tambah</button>
@@ -103,19 +103,19 @@
         </div>
         <div role="main" class="ui-content" id="main2">
             <div class="section-text">Edit kurir</div>
-            <form id="editDataForm">
+            <form id="editDataKurir">
                 <input type="hidden" value="" id="edit-id" />
                 <div class="form-group">
                     <label>Nama</label>
-                    <input type="text" class="form-control" id="edit-nama" name="nama" value="" required>
+                    <input type="text" class="form-control" id="edit-nama" name="nama" value="" maxlength="100" required>
                 </div>
                 <div class="form-group">
                     <label>No KTP</label>
-                    <input type="number" class="form-control" id="edit-no-ktp" name="no_ktp" value="" required>
+                    <input type="number" class="form-control" id="edit-no-ktp" name="no_ktp" maxlength="16" required>
                 </div>
                 <div class="form-group">
                     <label>Nomor Telpon</label>
-                    <input type="number" class="form-control" id="edit-no-telp" name="no_telp" value="" required>
+                    <input type="tel" class="form-control" id="edit-no-telp" name="no_telp" value="" maxlength="16" required>
                 </div>
             </form>
             <button type="button" class="btn btn-outline-success" id="btn-do-update">Update</button>
