@@ -1,38 +1,85 @@
 var Application = {
   initApplication: function () {
     $(window).load("pageinit", "#list-data", function () {
-      Application.getPemesanan()
+      Application.getPengiriman()
     })
 
-    $(document).on("click", "#detail-Pemesanan", async function () {
-      let id = $(this).data("idPemesanan")
-      let dataObject = await Application.getByIdPemesanan(id)
+    //Click detail pengiriman
+    $(document).on("click", "#detail-Pengiriman", async function () {
+      let id = $(this).data("idpengiriman")
+      let dataPengiriman = await Application.getByIdPengiriman(id)
+      console.log(dataPengiriman)
+      $("#i-id").val(dataPengiriman.data.id)
 
-      $('#i-id,#p-nama,#p-no-ktp,#p-no-telp').empty()
-      $('#i-id').val(dataObject['data'].id)
-      $('#p-nama').append(dataObject['data'].nama)
-      $('#p-no-ktp').append(dataObject['data'].no_ktp)
-      $('#p-no-telp').append(dataObject['data'].no_telp)
+      let pengirim = await Application.getByIdPelanggan(dataPengiriman.data.id_pengirim)
+      let penerima = await Application.getByIdPelanggan(dataPengiriman.data.id_penerima)
+      let barang = await Application.getByIdBarang(dataPengiriman.data.id_barang)
+      let kurir = await Application.getByIdKurir(dataPengiriman.data.id_kurir)
+
+      $('#i-id,#p-no-resi,#p-tgl-pesan,#p-pengirim,#p-penerima,#p-barang,#p-kurir,#p-kategori,#p-total').empty()
+
+      $('#p-no-resi').append(dataPengiriman['data'].no_resi)
+      $('#p-tgl-pesan').append(moment.utc(dataPengiriman['data'].tanggal).format("DD-MM-YYYY, HH:mm:ss"))
+      $('#p-pengirim').append(pengirim.data.nama)
+      $('#p-penerima').append(penerima.data.nama)
+      $('#p-barang').append(barang.data.nama)
+      $('#p-kurir').append(kurir.data.nama)
+      $('#p-kategori').append(dataPengiriman['data'].kategori)
+      $('#p-total').append(dataPengiriman['data'].total)
+      $("#btn-update").data("idpengiriman", id);
     })
 
-    $(document).on("click", "#btn-tambah-data", function () {
-      Application.getKurir()
-      Application.getPengirim()
-      Application.getPenerima()
-      Application.getBarang()
+    //Click tambah data
+    $(document).on("click", "#btn-tambah-data", async function () {
+      let dataKurir = await Application.getKurir()
+      dataKurir['data'].map(result => {
+        var appendList =
+          "<option value=" +
+          result.id +
+          "> " +
+          result.nama +
+          "</option>"
+        $("#select-kurir").append(appendList)
+      })
+      let dataPengirim = await Application.getPengirim()
+      dataPengirim['data'].map(result => {
+        var appendList =
+          "<option value=" +
+          result.id +
+          "> " +
+          result.nama +
+          "</option>"
+        $("#select-pengirim").append(appendList)
+      })
+      let dataPenerima = await Application.getPenerima()
+      dataPenerima['data'].map(result => {
+        var appendList =
+          "<option value=" +
+          result.id +
+          "> " +
+          result.nama +
+          "</option>"
+        $("#select-penerima").append(appendList)
+      })
+      let dataBarang = await Application.getBarang()
+      dataBarang['data'].map(result => {
+        var appendList =
+          `<option value="${result.id}" data-berat="${result.berat}" data-kategori="${result.jenis}">${result.nama}</option>`
+        $("#select-barang").append(appendList)
+      })
     })
 
-    $(document).on("click", "#btn-tambah-pemesanan", function () {
-      let no_resi = Application.makeId()
-      let tanggal = $("#input-tglpemesanan").val()
-      tanggal = moment(tanggal).format("YYYY-MM-DD HH:mm:ss")
+    //Add to database
+    $(document).on("click", "#btn-tambah-pengiriman", function () {
+      let no_resi = Application.makeNoresi()
+      let tanggal = $("#input-tglpengiriman").val()
       let id_pengirim = $("#select-pengirim option:selected").val()
       let id_penerima = $("#select-penerima option:selected").val()
       let id_barang = $("#select-barang option:selected").val()
       let id_kurir = $("#select-kurir option:selected").val()
       let kategori = $("#select-barang option:selected").data('kategori')
       let total = $("#total").val()
-      const PemesananData = {
+      const PengirimanData = {
         no_resi,
         tanggal,
         id_pengirim,
@@ -42,51 +89,100 @@ var Application = {
         kategori,
         total
       }
-      console.log(PemesananData)
+      Application.addPengiriman(PengirimanData)
+    })
 
-      Application.addPemesanan(PemesananData)
+    //Total number auto changed
+    $(document).on("input", "#input-ongkir, #select-jenis-kirim", () => {
+      let ongkir = $("#input-ongkir").val()
+      let selectedBeratBarang = $("#select-barang option:selected").data('berat')
+      let selectedKirim = $("#select-jenis-kirim option:selected").val()
+      let total = (parseInt(ongkir) + selectedKirim * selectedBeratBarang)
+      $("#total").val(total);
+    })
+
+    //Click update data
+    $(document).on("click", "#btn-update", async function () {
+      let id = $(this).data("idpengiriman")
+      let dataObject = await Application.getByIdPengiriman(id)
+
+      $('#edit-noresi').val(dataObject.data.no_resi)
+      $('#edit-tglpengiriman').val(moment.utc(dataObject.data.tanggal).format("DD-MM-YYYY, HH:mm:ss"))
+
+      let kurir = await Application.getByIdKurir(dataObject.data.id_kurir)
+      let dataKurir = await Application.getKurir()
+      dataKurir['data'].map(result => {
+        var appendList =
+          "<option value=" +
+          result.id +
+          " disabled> " +
+          result.nama +
+          "</option>"
+        $("#edit-kurir").append(appendList)
+      })
+      $('#edit-kurir').val(kurir.data.id).selectmenu('refresh', true)
+
+      let barang = await Application.getByIdBarang(dataObject.data.id_barang)
+      let dataBarang = await Application.getBarang()
+      dataBarang['data'].map(result => {
+        var appendList =
+          `<option value="${result.id}" data-berat="${result.berat}" data-kategori="${result.jenis}" disabled>${result.nama}</option>`
+        $("#edit-barang").append(appendList)
+      })
+      $('#edit-barang').val(barang.data.id).selectmenu('refresh', true)
+
+      let pengirim = await Application.getByIdPelanggan(dataObject.data.id_pengirim)
+      let dataPengirim = await Application.getPengirim()
+      dataPengirim['data'].map(result => {
+        var appendList =
+          "<option value=" +
+          result.id +
+          " disabled> " +
+          result.nama +
+          "</option>"
+        $("#edit-pengirim").append(appendList)
+      })
+      $('#edit-pengirim').val(pengirim.data.id).selectmenu('refresh', true)
+
+      let penerima = await Application.getByIdPelanggan(dataObject.data.id_penerima)
+      let dataPenerima = await Application.getPenerima()
+      dataPenerima['data'].map(result => {
+        var appendList =
+          "<option value=" +
+          result.id +
+          " disabled> " +
+          result.nama +
+          "</option>"
+        $("#edit-penerima").append(appendList)
+      })
+      $('#edit-penerima').val(penerima.data.id).selectmenu('refresh', true)
+      let kategori = $("#edit-jenis-kirim option:selected").val()
+      let hitungan = dataObject.data.total - (kategori * barang.data.berat)
+      $('#edit-ongkir').val(hitungan)
+      $("#btn-do-update").data("idpengiriman", id);
+      $('#edit-total').val(parseInt(hitungan) + kategori * barang.data.berat)
+    })
+
+    //Update to database
+    $(document).on("click", "#btn-do-update", async function () {
+      let id = $(this).data("idpengiriman")
+      let kategori = $("#edit-jenis-kirim option:selected").text()
+      let total = $("#edit-total").val()
+      const PengirimanData = {
+        kategori,
+        total
+      }
+      Application.updatePengiriman(id, PengirimanData)
     })
 
     $(document).on("click", "#btn-delete", function () {
       let id = $("#i-id").val()
-      Application.deletePemesanan(id)
-    })
-
-    $(document).on("input", "#input-ongkir", () => {
-      let ongkir = $("#input-ongkir").val()
-      let selectedBeratBarang = $("#select-barang option:selected").data('berat')
-      let selectedKirim = $("#select-jenis-kirim option:selected").val()
-      console.log(selectedBeratBarang + " " + selectedKirim)
-      let total = (parseInt(ongkir) + selectedKirim * selectedBeratBarang)
-      $("#total").val(total);
-
-    })
-
-    $(document).on("click", "#btn-update", async function () {
-      let id = $("#i-id").val()
-      let dataObject = await Application.getByIdPemesanan(id)
-
-      $('#edit-id').val(dataObject['data'].id)
-      $('#edit-nama').val(dataObject['data'].nama)
-      $('#edit-no-ktp').val(dataObject['data'].no_ktp)
-      $('#edit-no-telp').val(dataObject['data'].no_telp)
-    })
-
-    $(document).on("click", "#btn-do-update", function () {
-      let id = $("#edit-id").val()
-      let nama = $('#edit-nama').val()
-      let no_ktp = $('#edit-no-ktp').val()
-      let no_telp = $('#edit-no-telp').val()
-      const PemesananData = {
-        nama,
-        no_ktp,
-        no_telp
-      }
-      Application.updatePemesanan(id, PemesananData)
+      Application.deletePengiriman(id)
     })
   },
 
-  makeId: function () {
+  //Generate Noresi
+  makeNoresi: function () {
     var result = '';
     var characters = '0123456789';
     for (var i = 0; i < 15; i++) {
@@ -95,162 +191,7 @@ var Application = {
     return result;
   },
 
-  getPemesanan: function () {
-    $.ajax({
-      url: "http://kirimslur-server.herokuapp.com/pengiriman",
-      type: "get",
-      beforeSend: function () {
-        $.mobile.loading("show", {
-          text: "Mengambil data Pengiriman...",
-          textVisible: true
-        })
-      },
-      success: function (dataObject, textStatus, xhr) {
-        dataObject['data'].map(result => {
-          var appendList =
-            '<li><a href="#detail-data?id=' + result.id +
-            '" target="_self" id="detail-Pemesanan" data-idPemesanan="' + result.id +
-            '"><h2>' + result.no_resi +
-            "</h2><p>" + result.tanggal +
-            "</p><p><b>" + result.total +
-            "</b></p></a></li>"
-          $("#list-pemesanan").append(appendList)
-          $("#list-pemesanan").listview("refresh")
-        })
-      },
-      complete: function () {
-        $.mobile.loading("hide")
-      }
-    })
-  },
-
-  getKurir: function () {
-    $.ajax({
-      url: "http://kirimslur-server.herokuapp.com/kurir",
-      type: "get",
-      beforeSend: function () {
-        $.mobile.loading("show", {
-          text: "Mengambil data Kurir...",
-          textVisible: true
-        })
-      },
-      success: function (dataObject, textStatus, xhr) {
-        dataObject['data'].map(result => {
-          var appendList =
-            "<option value=" +
-            result.id +
-            "> " +
-            result.nama +
-            "</option>"
-          $("#select-kurir").append(appendList).selectmenu("refresh", true)
-        })
-      },
-      complete: function () {
-        $.mobile.loading("hide")
-      }
-    })
-  },
-
-  getPengirim: function () {
-    $.ajax({
-      url: "http://kirimslur-server.herokuapp.com/pelanggan",
-      type: "get",
-      beforeSend: function () {
-        $.mobile.loading("show", {
-          text: "Mengambil data Pelanggan...",
-          textVisible: true
-        })
-      },
-      success: function (dataObject, textStatus, xhr) {
-        dataObject['data'].map(result => {
-          var appendList =
-            "<option value=" +
-            result.id +
-            "> " +
-            result.nama +
-            "</option>"
-          $("#select-pengirim").append(appendList).selectmenu("refresh", true)
-        })
-      },
-      complete: function () {
-        $.mobile.loading("hide")
-      }
-    })
-  },
-
-  getPenerima: function () {
-    $.ajax({
-      url: "http://kirimslur-server.herokuapp.com/pelanggan",
-      type: "get",
-      beforeSend: function () {
-        $.mobile.loading("show", {
-          text: "Mengambil data Pelanggan...",
-          textVisible: true
-        })
-      },
-      success: function (dataObject, textStatus, xhr) {
-        dataObject['data'].map(result => {
-          var appendList =
-            "<option value=" +
-            result.id +
-            "> " +
-            result.nama +
-            "</option>"
-          $("#select-penerima").append(appendList).selectmenu("refresh", true)
-        })
-      },
-      complete: function () {
-        $.mobile.loading("hide")
-      }
-    })
-  },
-
-  getBarang: function () {
-    $.ajax({
-      url: "http://kirimslur-server.herokuapp.com/barang",
-      type: "get",
-      beforeSend: function () {
-        $.mobile.loading("show", {
-          text: "Mengambil data Barang...",
-          textVisible: true
-        })
-      },
-      success: function (dataObject, textStatus, xhr) {
-        dataObject['data'].map(result => {
-          var appendList =
-            `<option value="${result.id}" data-berat="${result.berat}" data-kategori="${result.jenis}">${result.nama}</option>`
-          $("#select-barang").append(appendList).selectmenu("refresh", true)
-        })
-      },
-      complete: function () {
-        $.mobile.loading("hide")
-      }
-    })
-  },
-
-  getByIdPemesanan: async function (id) {
-    let PemesananData
-    await $.ajax({
-      url: "http://kirimslur-server.herokuapp.com/pengiriman/" + id,
-      type: "get",
-      beforeSend: function () {
-        $.mobile.loading("show", {
-          text: "Mengambil data Pengiriman...",
-          textVisible: true
-        })
-      },
-      success: function (dataObject, textStatus, xhr) {
-        PemesananData = dataObject
-      },
-      complete: function () {
-        $.mobile.loading("hide")
-      }
-    })
-
-    return PemesananData
-  },
-
-  addPemesanan: function (data) {
+  addPengiriman: function (data) {
     $.ajax({
       url: "http://kirimslur-server.herokuapp.com/pengiriman",
       type: "post",
@@ -259,7 +200,7 @@ var Application = {
       data: JSON.stringify(data),
       beforeSend: function () {
         $.mobile.loading("show", {
-          text: "Menambah data Pemesanan...",
+          text: "Menambah data Pengiriman...",
           textVisible: true
         })
       },
@@ -274,7 +215,81 @@ var Application = {
     })
   },
 
-  deletePemesanan: function (id) {
+  getPengiriman: function () {
+    $.ajax({
+      url: "http://kirimslur-server.herokuapp.com/pengiriman",
+      type: "get",
+      beforeSend: function () {
+        $.mobile.loading("show", {
+          text: "Mengambil data Pengiriman...",
+          textVisible: true
+        })
+      },
+      success: function (dataObject, textStatus, xhr) {
+        dataObject['data'].map(result => {
+          var appendList =
+            '<li><a href="#detail-data?id=' + result.id +
+            '" target="_self" id="detail-Pengiriman" data-idpengiriman="' + result.id +
+            '"><h2>' + result.no_resi +
+            "</h2><p>" + moment.utc(result.tanggal).format("DD-MM-YYYY, HH:mm:ss") +
+            "</p><p><b>" + result.total +
+            "</b></p></a></li>"
+          $("#list-pengiriman").append(appendList)
+          $("#list-pengiriman").listview("refresh")
+        })
+      },
+      complete: function () {
+        $.mobile.loading("hide")
+      }
+    })
+  },
+
+  getByIdPengiriman: async function (id) {
+    let PengirimanData
+    await $.ajax({
+      url: "http://kirimslur-server.herokuapp.com/pengiriman/" + id,
+      type: "get",
+      beforeSend: function () {
+        $.mobile.loading("show", {
+          text: "Mengambil data Pengiriman...",
+          textVisible: true
+        })
+      },
+      success: function (dataObject, textStatus, xhr) {
+        PengirimanData = dataObject
+      },
+      complete: function () {
+        $.mobile.loading("hide")
+      }
+    })
+
+    return PengirimanData
+  },
+
+  updatePengiriman: function (id, data) {
+    $.ajax({
+      url: "http://kirimslur-server.herokuapp.com/pengiriman/" + id,
+      type: "PUT",
+      contentType: 'application/json',
+      data: JSON.stringify(data),
+      beforeSend: function () {
+        $.mobile.loading("show", {
+          text: "Memperbarui data Pengiriman...",
+          textVisible: true
+        })
+      },
+      success: function (dataObject, textStatus, xhr) {
+        if (xhr.status == 200) {
+          window.location.replace("pengiriman.html")
+        }
+      },
+      complete: function () {
+        $.mobile.loading("hide")
+      }
+    })
+  },
+
+  deletePengiriman: function (id) {
     $.ajax({
       url: "http://kirimslur-server.herokuapp.com/pengiriman/" + id,
       type: "delete",
@@ -295,27 +310,151 @@ var Application = {
     })
   },
 
-  updatePemesanan: function (id, data) {
-    $.ajax({
-      url: "http://kirimslur-server.herokuapp.com/pengiriman/" + id,
-      type: "PUT",
-      contentType: "application/json",
-      dataType: "json",
-      data: JSON.stringify(data),
+  getPengirim: async function () {
+    let dataPengirim
+    await $.ajax({
+      url: "http://kirimslur-server.herokuapp.com/pelanggan",
+      type: "get",
       beforeSend: function () {
         $.mobile.loading("show", {
-          text: "Memperbarui data Pengiriman...",
+          text: "Mengambil data Pelanggan...",
           textVisible: true
         })
       },
       success: function (dataObject, textStatus, xhr) {
-        if (xhr.status == 200) {
-          window.location.replace("pengiriman.html")
-        }
+        dataPengirim = dataObject
       },
       complete: function () {
         $.mobile.loading("hide")
       }
     })
+    return dataPengirim
+  },
+
+  getPenerima: async function () {
+    let dataPenerima
+    await $.ajax({
+      url: "http://kirimslur-server.herokuapp.com/pelanggan",
+      type: "get",
+      beforeSend: function () {
+        $.mobile.loading("show", {
+          text: "Mengambil data Pelanggan...",
+          textVisible: true
+        })
+      },
+      success: function (dataObject, textStatus, xhr) {
+        dataPenerima = dataObject
+      },
+      complete: function () {
+        $.mobile.loading("hide")
+      }
+    })
+    return dataPenerima
+  },
+
+  getByIdPelanggan: async function (id) {
+    let DataPelanggan
+    await $.ajax({
+      url: "http://kirimslur-server.herokuapp.com/pelanggan/" + id,
+      type: "get",
+      beforeSend: function () {
+        $.mobile.loading("show", {
+          text: "Mengambil data Kurir...",
+          textVisible: true
+        })
+      },
+      success: function (dataObject, textStatus, xhr) {
+        DataPelanggan = dataObject
+      },
+      complete: function () {
+        $.mobile.loading("hide")
+      }
+    })
+    return DataPelanggan
+  },
+
+  getBarang: async function () {
+    let dataBarang
+    await $.ajax({
+      url: "http://kirimslur-server.herokuapp.com/barang",
+      type: "get",
+      beforeSend: function () {
+        $.mobile.loading("show", {
+          text: "Mengambil data Barang...",
+          textVisible: true
+        })
+      },
+      success: function (dataObject, textStatus, xhr) {
+        dataBarang = dataObject
+      },
+      complete: function () {
+        $.mobile.loading("hide")
+      }
+    })
+    return dataBarang
+  },
+
+  getByIdBarang: async function (id) {
+    let BarangData
+    await $.ajax({
+      url: "http://kirimslur-server.herokuapp.com/barang/" + id,
+      type: "get",
+      beforeSend: function () {
+        $.mobile.loading("show", {
+          text: "Mengambil data Barang...",
+          textVisible: true
+        })
+      },
+      success: function (dataObject, textStatus, xhr) {
+        BarangData = dataObject
+      },
+      complete: function () {
+        $.mobile.loading("hide")
+      }
+    })
+
+    return BarangData
+  },
+
+  getKurir: async function () {
+    let dataKurir
+    await $.ajax({
+      url: "http://kirimslur-server.herokuapp.com/kurir",
+      type: "get",
+      beforeSend: function () {
+        $.mobile.loading("show", {
+          text: "Mengambil data Kurir...",
+          textVisible: true
+        })
+      },
+      success: function (dataObject, textStatus, xhr) {
+        dataKurir = dataObject
+      },
+      complete: function () {
+        $.mobile.loading("hide")
+      }
+    })
+    return dataKurir
+  },
+
+  getByIdKurir: async function (id) {
+    let DataKurir
+    await $.ajax({
+      url: "http://kirimslur-server.herokuapp.com/kurir/" + id,
+      type: "get",
+      beforeSend: function () {
+        $.mobile.loading("show", {
+          text: "Mengambil data Kurir...",
+          textVisible: true
+        })
+      },
+      success: function (dataObject, textStatus, xhr) {
+        DataKurir = dataObject
+      },
+      complete: function () {
+        $.mobile.loading("hide")
+      }
+    })
+    return DataKurir
   }
 }

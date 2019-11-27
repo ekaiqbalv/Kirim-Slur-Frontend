@@ -55,12 +55,15 @@
         </div>
         <div role="main" class="ui-content" id="main2">
             <div class="section-text">Detail pengiriman</div>
+            <input type="hidden" value="" id="i-id" />
             <label class="label-text">Nomor Resi</label>
-            <p id="p-noresi"></p>
+            <p id="p-no-resi"></p>
             <label class="label-text">Tanggal pengiriman</label>
-            <p id="p-tglpesan"></p>
-            <label class="label-text">Nama Pelanggan</label>
-            <p id="p-pelanggan"></p>
+            <p id="p-tgl-pesan"></p>
+            <label class="label-text">Nama Pengirim</label>
+            <p id="p-pengirim"></p>
+            <label class="label-text">Nama Penerima</label>
+            <p id="p-penerima"></p>
             <label class="label-text">Nama Barang</label>
             <p id="p-barang"></p>
             <label class="label-text">Nama Kurir</label>
@@ -78,11 +81,11 @@
                 <div role="main" class="ui-content">
                     <h5 class="ui-title">Apa anda yakin ingin menghapus data pengiriman ini?</h5>
                     <a href="#" class="ui-btn ui-btn-inline btn btn-secondary" data-rel="back">Batal</a>                    
-                    <a class="ui-btn ui-btn-inline btn btn-danger" data-rel="back" data-transition="flow" id="btn-hapus-pelanggan" data-idpelanggan="">Ya, Hapus</a>
+                    <a class="ui-btn ui-btn-inline btn btn-danger" data-rel="back" data-transition="flow" id="btn-delete" >Ya, Hapus</a>
                 </div>
             </div>
             <a href="#popupKonfirmasiHapus" data-rel="popup" data-position-to="window" data-transition="pop"><button class="btn btn-sm btn-danger">Hapus</button></a>
-            <a id="edit-pelanggan" data-idpelanggan=""><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
+            <a href="#edit-data" id="btn-update" data-idPengiriman=""><button class="btn btn-sm btn-outline-secondary">Edit</button></a>
         </div>
     </div>
 
@@ -100,36 +103,46 @@
                 <div class="form-group">
                     <label>Pengirim</label>
                     <!-- <input type="text" class="form-control" name="pelanggan"> -->
-                    <select id="select-pengirim"></select>
+                    <select id="select-pengirim">
+                        <option disabled selected>Pilih Pengirim</option>
+                    </select>
                 </div>
                 <div class="form-group">
                         <label>Penerima</label>
                         <!-- <input type="text" class="form-control" name="pelanggan"> -->
-                        <select id="select-penerima"></select>
+                        <select id="select-penerima">
+                            <option disabled selected>Pilih Penerima</option>
+                        </select>
                     </div>
                 <div class="form-group">
                     <label>Barang</label>
                     <!-- <input type="text" class="form-control" name="barang"> -->
-                    <select id="select-barang"></select>
+                    <select id="select-barang">
+                        <option disabled selected>Pilih Barang</option>
+                    </select>
                 </div>
                 <div class="form-group">
                         <label>Kurir</label>
                         <!-- <input type="text" class="form-control" name="kurir"> -->
-                        <select id="select-kurir"></select>
+                        <select id="select-kurir">
+                            <option disabled selected>Pilih Kurir</option>
+                        </select>
                     </div>
+                <div class="form-group">
+                    <label>Jenis Pengiriman</label>
+                    <!-- <input type="number" class="form-control" name="kategori"> -->
+                    <select name="select-kirim" id="select-jenis-kirim">
+                        <option disabled selected>Pilih Jenis Pengiriman</option>
+                        <option value=20000>Express</option>
+                        <option value=10000>Regular</option>
+                    </select>
+                </div>
                 <div class="form-group">
                     <label>Ongkir</label>
                     <input type="number" min="0" class="form-control" name="ongkir" id="input-ongkir">
                     <!-- <select id="select-barang"></select> -->
                 </div>
-                <div class="form-group">
-                    <label>Jenis Pengiriman</label>
-                    <!-- <input type="number" class="form-control" name="kategori"> -->
-                    <select name="select-kirim" id="select-jenis-kirim">
-                        <option value="10000">Express</option>
-                        <option value="20000">Regular</option>
-                    </select>
-                </div>
+                
                 <div class="form-group">
                     <label>Total</label>
                     <!-- <p id="show-total"></p> -->
@@ -147,39 +160,56 @@
         <div role="main" class="ui-content" id="main2">
             <div class="section-text">Edit pengiriman</div>
             <form id="editDatapengiriman">
+                <input type="hidden" value="" id="edit-id" />
+                <div class="form-group">
+                    <label>No Resi</label>
+                    <input type="number" class="form-control" name="resipengiriman" id="edit-noresi" disabled>
+                </div>
                 <div class="form-group">
                     <label>Tanggal pengiriman</label>
-                    <input type="date" class="form-control" name="tglpengiriman" disabled>
+                    <input type="text" class="form-control" name="tglpengiriman" id="edit-tglpengiriman" disabled>
                 </div>
                 <div class="form-group">
-                    <label>Kurir</label>
-                    <select name="select-kurir" id="select-barang-kurir"></select>
-                    <option value=""></option>
+                    <label>Pengirim</label>
+                    <!-- <input type="text" class="form-control" name="pelanggan"> -->
+                    <select id="edit-pengirim"></select>
                 </div>
                 <div class="form-group">
-                    <label>Pelanggan</label>
-                    <select name="select-pelanggan" id="select-barang-pelanggan"></select>
-                    <option value=""></option>
+                    <label>Penerima</label>
+                    <!-- <input type="text" class="form-control" name="pelanggan"> -->
+                    <select id="edit-penerima"></select>
                 </div>
                 <div class="form-group">
                     <label>Barang</label>
-                    <select name="select-barang" id="select-barang-pesan"></select>
-                    <option value=""></option>
+                    <!-- <input type="text" class="form-control" name="barang"> -->
+                    <select id="edit-barang"></select>
                 </div>
                 <div class="form-group">
-                    <label>Kategori</label>
-                    <select name="select-kategori" id="select-kategori-pesan">
-                            <option value="Dokumen">Dokumen</option>
-                            <option value="Makanan">Makanan</option>
-                            <option value="Mudah Pecah">Mudah Pecah</option>
+                    <label>Kurir</label>
+                    <!-- <input type="text" class="form-control" name="kurir"> -->
+                    <select id="edit-kurir"></select>
+                </div>
+                <div class="form-group">
+                    <label>Jenis Pengiriman</label>
+                    <!-- <input type="number" class="form-control" name="kategori"> -->
+                    <select name="select-kirim" id="edit-jenis-kirim">
+                        <option value="20000">Express</option>
+                        <option value="10000">Regular</option>
                     </select>
                 </div>
                 <div class="form-group">
-                        <label>Total</label>
-                        <p id="show-total"></p>
+                    <label>Ongkir</label>
+                    <input type="number" value="" min="0" class="form-control" name="ongkir" id="edit-ongkir">
+                    <!-- <select id="select-barang"></select> -->
+                </div>
+                
+                <div class="form-group">
+                    <label>Total</label>
+                    <!-- <p id="show-total"></p> -->
+                    <input type="text" value="" class="form-control" name="total" id="edit-total" readonly>
                 </div>
             </form>
-            <button id="btn-edit-pengiriman" data-idpengiriman="" type="button"
+            <button id="btn-do-update" data-idpengiriman="" type="button"
                 class="btn btn-outline-success">Selesai</button>
         </div>
     </div>
