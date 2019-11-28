@@ -163,6 +163,15 @@ var Application = {
       $('#edit-total').val(parseInt(hitungan) + kategori * barang.data.berat)
     })
 
+    //In edit form, total number auto changed
+    $(document).on("input", "#edit-ongkir, #edit-jenis-kirim", () => {
+      let ongkir = $("#edit-ongkir").val()
+      let selectedBeratBarang = $("#edit-barang option:selected").data('berat')
+      let selectedKirim = $("#edit-jenis-kirim option:selected").val()
+      let total = (parseInt(ongkir) + selectedKirim * selectedBeratBarang)
+      $("#edit-total").val(total);
+    })
+
     //Update to database
     $(document).on("click", "#btn-do-update", async function () {
       let id = $(this).data("idpengiriman")
