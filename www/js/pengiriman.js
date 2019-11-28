@@ -64,7 +64,7 @@ var Application = {
       let dataBarang = await Application.getBarang()
       dataBarang['data'].map(result => {
         var appendList =
-          `<option value="${result.id}" data-berat="${result.berat}" data-kategori="${result.jenis}">${result.nama}</option>`
+          `<option value="${result.id}" data-berat="${result.berat}">${result.nama}</option>`
         $("#select-barang").append(appendList)
       })
     })
@@ -77,7 +77,7 @@ var Application = {
       let id_penerima = $("#select-penerima option:selected").val()
       let id_barang = $("#select-barang option:selected").val()
       let id_kurir = $("#select-kurir option:selected").val()
-      let kategori = $("#select-barang option:selected").data('kategori')
+      let kategori = $("#select-jenis-kirim option:selected").val()
       let total = $("#total").val()
       const PengirimanData = {
         no_resi,
@@ -105,7 +105,6 @@ var Application = {
     $(document).on("click", "#btn-update", async function () {
       let id = $(this).data("idpengiriman")
       let dataObject = await Application.getByIdPengiriman(id)
-
       $('#edit-noresi').val(dataObject.data.no_resi)
       $('#edit-tglpengiriman').val(moment.utc(dataObject.data.tanggal).format("DD-MM-YYYY, HH:mm:ss"))
 
