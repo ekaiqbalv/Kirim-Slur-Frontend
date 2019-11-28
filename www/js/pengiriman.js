@@ -156,11 +156,16 @@ var Application = {
         $("#edit-penerima").append(appendList)
       })
       $('#edit-penerima').val(penerima.data.id).selectmenu('refresh', true)
+      $("#edit-jenis-kirim > option").each(function() {
+        if(this.text == dataObject.data.kategori){          
+          $('#edit-jenis-kirim').val(this.value).selectmenu('refresh', true)          
+        }
+      });      
       let kategori = $("#edit-jenis-kirim option:selected").val()
-      let hitungan = dataObject.data.total - (kategori * barang.data.berat)
+      let hitungan = dataObject.data.total - (kategori * barang.data.berat)      
       $('#edit-ongkir').val(hitungan)
-      $("#btn-do-update").data("idpengiriman", id);
       $('#edit-total').val(parseInt(hitungan) + kategori * barang.data.berat)
+      $("#btn-do-update").data("idpengiriman", id);      
     })
 
     //In edit form, total number auto changed
