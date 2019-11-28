@@ -77,7 +77,7 @@ var Application = {
       let id_penerima = $("#select-penerima option:selected").val()
       let id_barang = $("#select-barang option:selected").val()
       let id_kurir = $("#select-kurir option:selected").val()
-      let kategori = $("#select-jenis-kirim option:selected").val()
+      let kategori = $("#select-jenis-kirim option:selected").text()
       let total = $("#total").val()
       const PengirimanData = {
         no_resi,
